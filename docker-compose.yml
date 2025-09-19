@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  rag:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: gpt-4o-mini
+      CHROMA_DIR: /chroma
+    volumes:
+      - rag_chroma:/chroma
+volumes:
+  rag_chroma:
+
