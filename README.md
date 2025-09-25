@@ -45,10 +45,7 @@ Flask (HTTP)
  ├─ /             → HTML UI (forms; no JS required)
  ├─ /index_form   → Index text (Repo Rules)
  ├─ /index_file_form → Upload single file or ZIP
- ├─ /query_form   → Ask questions against the indexed data
- ├─ /index        → JSON: index text
- ├─ /index_file   → JSON: index file/zip
- └─ /query        → JSON: ask question
+ └─ /query_form   → Ask questions against the indexed data
 ```
 - **Embeddings:** `all-MiniLM-L6-v2`
 - **Storage:** Chroma (default path `/chroma`, configurable)
