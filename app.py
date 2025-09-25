@@ -133,34 +133,6 @@ def query_form():
     except Exception as e:
         return render_template("index.html", index_msg=None, file_msg=None, answer=f"(error) {e}")
 
-# ---------- JSON APIs still available (optional) ----------
-@app.post("/index")
-def index_api():
-    data = request.get_json(force=True, silent=True) or {}
-    text = data.get("text","")
-    if not text: return jsonify({"status":"error","detail":"empty text"}), 400
-    doc_id = data.get("id") or str(uuid.uuid4())
-    collection.add(documents=[text], ids=[doc_id])
-    return jsonify({"status":"ok","indexed_id":doc_id})
-
-@app.post("/index_file")
-def index_file_api():
-    # same logic as index_file_form but return jsonify(...)
-    return jsonify({"status":"ok"})  # keep if you still want programmatic access
-
-@app.post("/query")
-def query_api():
-    data = request.get_json(force=True, silent=True) or {}
-    q = data.get("question",""); k = int(data.get("k",4)) or 4
-    res = collection.query(query_texts=[q], n_results=k, include=["documents"])
-    docs = (res.get("documents") or [[]])[0]
-    context = "\n\n---\n\n".join(docs) if docs else ""
-    prompt = "Use the context if relevant; otherwise answer from general knowledge.\n\n" \
-             f"Context:\n{context}\n\nQuestion: {q}\nAnswer:"
-    r = oai.chat.completions.create(model=OPENAI_MODEL, messages=[{"role":"user","content":prompt}], temperature=0.2)
-    ans = (r.choices[0].message.content or "").strip()
-    return jsonify({"answer": ans, "context_docs": docs})
-
 # Always JSON on errors (so even API callers don’t get HTML)
 from werkzeug.exceptions import HTTPException
 @app.errorhandler(Exception)
