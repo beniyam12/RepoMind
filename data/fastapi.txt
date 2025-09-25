@@ -1,5 +1,0 @@
-FastAPI is a modern, fast (high-performance), web framework for building APIs with Python. 
-It is based on standard Python type hints and is built on top of Starlette for the web parts and Pydantic for the data parts. 
-One of the key benefits of FastAPI is automatic validation of request data, automatic interactive API documentation, and excellent editor support. 
-FastAPI was created to combine the best features of Flask and Django while emphasizing speed and developer productivity. 
-Common use cases include building RESTful APIs, machine learning model deployment, and backend services for web and mobile applications.
